@@ -1,0 +1,21 @@
+---
+params:
+  branch: "default"
+
+---
+
+```{r}
+source(here::here("R/functions.R"))
+```
+
+```{r}
+branch <- tools::toTitleCase(params$branch)
+```
+
+
+```{r, fig.height=13, fig.width=10, fig.align='center'}
+
+create_image(branch = branch,
+             month = this_month,
+             year = this_year)
+```

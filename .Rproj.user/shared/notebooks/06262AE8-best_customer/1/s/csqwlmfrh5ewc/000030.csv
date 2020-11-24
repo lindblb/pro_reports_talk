@@ -1,0 +1,5 @@
+"0","ggplot() +"
+"0","  geom_sf(data = final$geom, aes(fill = final$interest_income)) +"
+"0","  scale_fill_viridis_c(trans = ""sqrt"", alpha = .7) +"
+"0","  labs(fill='Interest Income') + "
+"0","  theme_void()"

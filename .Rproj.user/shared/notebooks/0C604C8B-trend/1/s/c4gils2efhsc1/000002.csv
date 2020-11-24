@@ -1,0 +1,8 @@
+"0","branch <- params$branch"
+"0",""
+"0","statement <- glue::glue_sql(""SELECT * from financials"
+"0","                             WHERE branch == {branch}"", "
+"0","                            .con = db)"
+"0","                             "
+"0","mydata <- DBI::dbGetQuery(conn = db,"
+"0","                          statement = statement)"

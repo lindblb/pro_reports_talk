@@ -1,0 +1,95 @@
+---
+params:
+  branch: "default"
+---
+
+
+```{r}
+# params <- list(branch = "kindred")
+```
+
+
+```{r}
+# construct sql query
+
+branch <- params$branch
+statement <- glue::glue_sql("SELECT * from financials
+                             WHERE branch == {branch}", 
+                            .con = db)
+                             
+mydata <- DBI::dbGetQuery(conn = db,
+                          statement = statement)
+```
+
+
+
+```{r}
+# wrangle data
+right_now <- paste0(this_year, "-", this_month)
+
+final <- mydata %>% 
+  dplyr::filter(date == right_now) %>% 
+  
+  dplyr::rename('Branch' = branch,
+                'Loans & Leases' = loans_leases,
+                'Debt Securities' = debt_sec,
+                'Other Interest Income' = other_int_income,
+                'Deposits' = deposits,
+                'Long-term Debt' = long_term_debt,
+                'Card Income' = card_income,
+                'Service Charges' = svc_charges,
+                'Personnel' = personnel,
+                'Occupancy' = occupancy,
+                'Marketing' = marketing) %>% 
+  dplyr::mutate(`Total Interest Income` = `Loans & Leases` + `Debt Securities` + `Other Interest Income`,
+                `Total Interest Expense` = Deposits + `Long-term Debt`,
+                `Net Interest Income` = `Total Interest Income` - `Total Interest Expense`,
+                `Total Noninterest Income` = `Card Income` + `Service Charges`,
+                `Total Revenue, Net of Interest Income` = `Total Noninterest Income` + `Net Interest Income`,
+                `Total Noninterest Expense` = Personnel + Occupancy + Marketing,
+                `Net Income` = `Total Revenue, Net of Interest Income` - `Total Noninterest Expense`) %>% 
+  dplyr::mutate_if(.predicate = is.numeric, scales::dollar) %>% 
+  dplyr::select('Loans & Leases','Debt Securities', 'Other Interest Income', 'Total Interest Income',
+                'Deposits', 'Long-term Debt', 'Total Interest Expense', 'Net Interest Income',
+                'Card Income', 'Service Charges', 'Total Noninterest Income',
+                'Total Revenue, Net of Interest Income',
+                'Personnel', 'Occupancy', 'Marketing', 'Total Noninterest Expense',
+                'Net Income') %>% 
+  data.table::transpose(keep.names = "Fields")
+
+  
+
+names(final) <- c("", right_now) 
+```
+
+## Income Statement
+
+```{r}
+final_kable  <- final %>% # dplyr::group_by(group) %>%
+  # dplyr::select(-group) %>%
+  # gt::gt()
+  knitr::kable("latex", booktabs = T, longtable = T, align = c("l","r")) %>%
+
+ kableExtra::kable_styling(
+    latex_options = c("scale_down"),
+    position = "left", full_width = T
+  )  %>% 
+ kableExtra::kable_styling(font_size = 12) %>% 
+
+  
+ kableExtra::row_spec(4, bold = T) %>% 
+  kableExtra::row_spec(7, bold = T) %>% 
+  kableExtra::row_spec(8, bold = T) %>% 
+  kableExtra::row_spec(11, bold = T) %>% 
+  kableExtra::row_spec(12, bold = T) %>% 
+  kableExtra::row_spec(16, bold = T) %>% 
+  kableExtra::row_spec(17, bold = T) %>% 
+
+  kableExtra::pack_rows(group_label = "Interest Income", start_row = 1, end_row = 4) %>% 
+  kableExtra::pack_rows(group_label = "Interest Expense", start_row = 5, end_row = 8) %>% 
+  kableExtra::pack_rows(group_label = "Noninterest Income", start_row = 9, end_row = 12) %>% 
+  kableExtra::pack_rows(group_label = "Noninterest Expense", start_row = 13, end_row = 16)
+
+final_kable
+```
+
