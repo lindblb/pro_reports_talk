@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Professional Financial Reports with Rmarkdown
+# Professional Financial Reports with {rmarkdown}
 
 ![hero](assets/hero.png)
 
