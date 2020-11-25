@@ -29,6 +29,7 @@ create_reports <- function(...) {
   
 }
 
+# Wrap our fn in the possibly function, to catch errors
 
 maybe_create_reports <- purrr::possibly(.f = create_reports, otherwise = NULL)
 
@@ -40,3 +41,4 @@ maybe_create_reports <- purrr::possibly(.f = create_reports, otherwise = NULL)
 
 input_data %>% 
   purrr::pwalk(maybe_create_reports)
+

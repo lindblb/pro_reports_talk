@@ -5,10 +5,6 @@ params:
 
 
 ```{r}
-# params <- list(branch = "fargo")
-```
-
-```{r}
 branch <- params$branch
 
 statement <- glue::glue_sql("SELECT * from financials
@@ -69,9 +65,8 @@ final <- mydata %>%
 ## Income Statement Trend
 ```{r}
 
-final_kable  <- final %>% # dplyr::group_by(group) %>%
-  # dplyr::select(-group) %>%
-  # gt::gt()
+final_kable  <- final %>% 
+  
   knitr::kable("latex", booktabs = T, longtable = T, align = c("l","r","r","r","r","r")) %>%
 
  kableExtra::kable_styling(

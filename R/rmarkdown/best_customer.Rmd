@@ -4,9 +4,6 @@ params:
 ---
 
 
-```{r}
-# params <- list(branch = "kindred")
-```
 
 ```{r}
 branch <- params$branch
@@ -23,31 +20,19 @@ mydata <- DBI::dbGetQuery(conn = db,
 ## Top Customers by State
 ```{r}
 
-final_kable  <- mydata %>% # dplyr::group_by(group) %>%
+final_kable  <- mydata %>% 
+  
   dplyr::select(CIF, Customer = cust_name, `Interest Income` = interest_income) %>%
   dplyr::mutate('Interest Income' = scales::dollar(`Interest Income`)) %>% 
-  # gt::gt()
+
   knitr::kable("latex", booktabs = T, longtable = T, align = c("l","r", "r")) %>%
 
- kableExtra::kable_styling(
+  kableExtra::kable_styling(
     latex_options = c("scale_down"),
     position = "left", full_width = T
   )  %>% 
  kableExtra::kable_styling(font_size = 12) 
 
-  
-  # kableExtra::row_spec(5, bold = T) %>% 
-  # kableExtra::row_spec(8, bold = T) %>% 
-  # kableExtra::row_spec(9, bold = T) %>% 
-  # kableExtra::row_spec(12, bold = T) %>% 
-  # kableExtra::row_spec(13, bold = T) %>% 
-  # kableExtra::row_spec(17, bold = T) %>% 
-  # kableExtra::row_spec(18, bold = T) %>% 
-
-  # kableExtra::pack_rows(group_label = "Interest Income", start_row = 2, end_row = 5) %>% 
-  # kableExtra::pack_rows(group_label = "Interest Expense", start_row = 6, end_row = 9) %>% 
-  # kableExtra::pack_rows(group_label = "Noninterest Income", start_row = 10, end_row = 13) %>% 
-  # kableExtra::pack_rows(group_label = "Noninterest Expense", start_row = 14, end_row = 17)
 
 final_kable
 ```

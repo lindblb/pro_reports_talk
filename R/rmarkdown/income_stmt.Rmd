@@ -4,10 +4,6 @@ params:
 ---
 
 
-```{r}
-# params <- list(branch = "kindred")
-```
-
 
 ```{r}
 # construct sql query
@@ -65,9 +61,9 @@ names(final) <- c("", right_now)
 ## Income Statement
 
 ```{r}
-final_kable  <- final %>% # dplyr::group_by(group) %>%
-  # dplyr::select(-group) %>%
-  # gt::gt()
+final_kable  <- final %>% 
+
+
   knitr::kable("latex", booktabs = T, longtable = T, align = c("l","r")) %>%
 
  kableExtra::kable_styling(
