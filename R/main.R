@@ -4,6 +4,9 @@
 source(here::here("R/setup.R"))
 
 
+# Iterator functions ------------------------------------------------------
+
+
 
 create_reports <- function(...) {
   
@@ -28,6 +31,11 @@ create_reports <- function(...) {
 
 
 maybe_create_reports <- purrr::possibly(.f = create_reports, otherwise = NULL)
+
+
+
+
+# Main iterator -----------------------------------------------------------
 
 
 input_data %>% 

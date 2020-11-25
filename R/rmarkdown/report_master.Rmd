@@ -4,7 +4,7 @@ output:
     latex_engine: xelatex
 
 geometry: margin=1.9cm 
-mainfont: Calibri
+mainfont: Calibri  # Use Ubuntu as mainfont if on Ubuntu-based linux, same idea for Mac
 
 params:
   branch: "default"
