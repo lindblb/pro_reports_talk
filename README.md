@@ -115,3 +115,8 @@ to knit a pdf for each branch given the *branch* parameter.
 
 If you run [R/main.R](R/main.R), at this point you should have three
 pdfs in [finished\_reports](finished_reports).
+
+## Contact
+
+Reach out to me at bradley.lindblad\[at\]gmail.com or my website
+[technistema.com](technistema.com).
