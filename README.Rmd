@@ -86,4 +86,4 @@ The last step is to iterate over the three branches in our example, and create a
 If you run [R/main.R](R/main.R), at this point you should have three pdfs in [finished_reports](finished_reports).
 
 ## Contact
-Reach out to me at bradley.lindblad[at]gmail.com or my website [technistema.com](technistema.com).
+Reach out to me at bradley.lindblad[at]gmail.com or my website [technistema.com](https://technistema.com).
